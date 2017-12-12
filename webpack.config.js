@@ -3,6 +3,8 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const path = require('path');
 const webpack = require('webpack');
 
+const sourcePath = path.join(__dirname);
+
 const config = {
     entry: './app/index.js',
     output: {
@@ -13,10 +15,19 @@ const config = {
         rules: [
             {
                 test: /\.js$/,
-                use: 'babel-loader',
-                query: {
-                    presets: ['es2015']
-                }
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['env'],
+                        // plugins: [
+                        //     require('@babel/transform-runtime'),
+                        //     require('@babel/plugin-transform-regenerator'),
+                        //     require('@babel/syntax-async-functions')
+                        // ]
+                    }
+                },
+                include: sourcePath
             },
             {
                 test: /\.css$/,
