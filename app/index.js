@@ -1,6 +1,8 @@
 import "babel-polyfill";
 import "whatwg-fetch";
 
+import './style/app.scss';
+
 import DataStore from './src/dataStore.js';
 import Templates from './src/templateApi.js';
 import NewsApi from './src/newsApi.js';
