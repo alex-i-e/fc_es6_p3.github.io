@@ -1,5 +1,5 @@
 import "babel-polyfill";
-import 'whatwg-fetch'
+import "whatwg-fetch";
 
 import DataStore from './src/dataStore.js';
 import Templates from './src/templateApi.js';

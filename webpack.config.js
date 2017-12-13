@@ -9,25 +9,24 @@ const config = {
     entry: './app/index.js',
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: 'main.bundle.js'
+        filename: './src/[name].[chunkhash].js',
+        // publicPath: "./src/"
+        chunkFilename: "[id].js",
+        // chunkFilename: "[chunkhash].js",
+        sourceMapFilename: "sourcemaps/[file].map",
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['env'],
-                        // plugins: [
-                        //     require('@babel/transform-runtime'),
-                        //     require('@babel/plugin-transform-regenerator'),
-                        //     require('@babel/syntax-async-functions')
-                        // ]
-                    }
-                },
-                include: sourcePath
+                include: [
+                    path.resolve(__dirname, "app")
+                ],
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                options: {
+                    presets: ['env'],
+                }
             },
             {
                 test: /\.css$/,
@@ -39,15 +38,23 @@ const config = {
             }
         ]
     },
+    resolve: {
+        modules: [
+            "node_modules",
+            path.resolve(__dirname, "app")
+        ],
+        extensions: [".js", ".json", ".css"],
+        // extensions that are used
+    },
     plugins: [
         // new webpack.optimize.UglifyJsPlugin(),
         new HtmlWebpackPlugin({template: './index.html'}),
         new ExtractTextPlugin("styles.css")
     ]
-    // ,stats: {
-    //     colors: true
-    // }
-    ,devtool: 'source-map'
+    ,stats: {
+        colors: true
+    }
+    ,devtool: 'source-map' // devtool: "eval",
 };
 
 module.exports = config;
